@@ -352,6 +352,13 @@ silicate
 	holder.del_reagent(id)
 	return
 
+/datum/chemical_reaction/white_phosphorus
+	name = "White Phosphorus"
+	id = "white_phosphorus"
+	result = "white_phosphorus"
+	required_reagents = list("phosphorus" = 3, "plasma" = 1, "sacid" = 1 )
+	result_amount = 3
+
 /*
 /datum/chemical_reaction/smoke
 	name = "Smoke"
