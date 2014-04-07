@@ -1,4 +1,3 @@
-
 /mob/living/simple_animal/construct
 	name = "Construct"
 	real_name = "Construct"
@@ -10,6 +9,7 @@
 	response_harm   = "punches"
 	icon_dead = "shade_dead"
 	speed = 0
+	see_in_dark = 6
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPUSH
@@ -125,6 +125,10 @@
 	Proj.on_hit(src, 0)
 	return 0
 
+/mob/living/simple_animal/construct/Process_Spacemove(var/check_drift = 0)
+	return 1	//Ripped straight from Space Carp!
+
+
 
 
 /////////////////Juggernaut///////////////
@@ -216,7 +220,7 @@
 	melee_damage_upper = 25
 	attacktext = "slashes"
 	speed = 0
-	see_in_dark = 7
+	see_in_dark = 8
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
 
