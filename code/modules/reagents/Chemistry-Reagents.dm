@@ -767,8 +767,27 @@ datum
 					M.adjust_fire_stacks(volume / 10)
 					return
 
-//Commenting this out as it's horribly broken. It's a neat effect though, so it might be worth making a new reagent (that is less common) with similar effects.	-Pete
-/*
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M.adjustToxLoss(1)
+				..()
+				return
+
+		white_phosphorus
+			name = "White phosphorus"
+			id = "white_phosphorus"
+			description = "A military-grade incindiary compound."
+			reagent_state = SOLID
+			color = "#FFFFE0" // rgb: 255, 255, 224
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume) //Splash people to burn them!
+				if(!istype(M, /mob/living))
+					return
+				if(method == TOUCH)
+					M.adjust_fire_stacks(volume / 5) //More energetic than welding fuel.
+					M.IgniteMob()
+					return
+
 			reaction_obj(var/obj/O, var/volume)
 				src = null
 				var/turf/the_turf = get_turf(O)
@@ -779,6 +798,7 @@ datum
 				fuel.moles = 15
 				napalm.trace_gases += fuel
 				the_turf.assume_air(napalm)
+
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				var/datum/gas_mixture/napalm = new
@@ -786,7 +806,8 @@ datum
 				fuel.moles = 15
 				napalm.trace_gases += fuel
 				T.assume_air(napalm)
-				return*/
+				return
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.adjustToxLoss(1)
