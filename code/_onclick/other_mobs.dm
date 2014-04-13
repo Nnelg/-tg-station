@@ -47,6 +47,15 @@
 /mob/living/RestrainedClickOn(var/atom/A)
 	return
 
+/*
+	Shades
+	defaults to attack_animal
+*/
+/mob/living/simple_animal/shade/UnarmedAttack(var/atom/A)
+	A.attack_shade(src)
+/atom/proc/attack_shade(mob/user as mob)
+	attack_animal(user)
+	return
 
 /*
 	Monkeys
@@ -116,6 +125,7 @@
 	return
 /mob/living/carbon/slime/RestrainedClickOn(var/atom/A)
 	return
+
 
 /*
 	New Players:
