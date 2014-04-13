@@ -69,6 +69,38 @@
 						M.show_message("\red [user] gently taps [src] with [O]. ")
 		return
 
+	UnarmedAttack(var/atom/A)
+		if(!istype(A,mob/living/carbon))
+			A.attack_animal(src)
+			return
+		
+		var/mob/living/carbon/M = A
+		
+		if(M.stat==DEAD)
+			src << "This body is devoid of life. There is nothing for you to feed off of here."
+			return
+		
+		if(attack_sound)
+			playsound(M.loc, attack_sound, 50, 1, 1)
+		for(var/mob/O in viewers(M, null))
+			O.show_message("\red <B>[src]</B> [attacktext] [M]!", 1)
+		add_logs(src, M, "attacked", admin=0)
+
+		
+		M.take_overall_damage(3,0)
+		M.adjustStaminaLoss(rand(1,6)+rand(1,6))
+
+		health = min(health+3,maxHealth*2)
+		
+		if(prob(15))
+			M << "\purple An icy spear of dread reaches to your very soul!"
+			M.Jitter(500)
+			M.hallucination = min( M.hallucination+100, max(400,M.hallucination) ) //Won't reduce hallucination if above 400
+
+
+
+
+
 	Process_Spacemove(var/check_drift = 0)
 		return 1	//Ripped straight from Space Carp!
 
