@@ -565,7 +565,6 @@
 						CM.legcuffed = null
 						CM.update_inv_legcuffed(0)
 
-
 /mob/living/proc/get_visible_name()
 	return name
 
@@ -581,3 +580,22 @@
 /mob/living/proc/Exhaust()
 	src << "<span class='notice'>You're too exhausted to keep going...</span>"
 	Weaken(5)
+
+/mob/living/proc/attack_shade(mob/living/simple_animal/shade/user)
+	if(user.attack_sound)
+		playsound(loc, user.attack_sound, 50, 1, 1)
+	for(var/mob/O in viewers(src, null))
+		O.show_message("\red <B>[user]</B> [user.attacktext] [src]!", 1)
+	add_logs(user, src, "attacked", admin=0)
+	
+	if(stat==DEAD)
+		user.adjustBruteLoss(-user.life_drain_amount)
+		if(prob(user.chill_prob))
+			M << "\purple An icy spear of dread reaches to your very soul!"
+			M.Jitter(300)
+			M.Stun(1)
+	
+	take_overall_damage(user.life_drain_amount*2,0)
+	
+	return
+
