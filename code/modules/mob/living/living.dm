@@ -589,13 +589,14 @@
 	add_logs(user, src, "attacked", admin=0)
 	
 	if(stat!=DEAD)
-		user.adjustBruteLoss(-user.life_drain_amount)
+		if(prob(user.leech_prob))
+			user.adjustBruteLoss(-user.leech_heal_amount)
 		if(prob(user.chill_prob))
 			M << "\purple An icy spear of dread reaches to your very soul!"
 			M.Jitter(300)
 			M.Stun(1)
 	
-	take_overall_damage(user.life_drain_amount*2,0)
+	take_overall_damage(rand(user.melee_damage_lower,user.melee_damage_upper),0)
 	
 	return
 
