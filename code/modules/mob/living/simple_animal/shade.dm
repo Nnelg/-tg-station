@@ -27,9 +27,20 @@
 	faction = "cult"
 	status_flags = CANPUSH
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	
+	//shade-specific vars:
 	var/obj/item/device/soulstone/master_stone = null
 	var/obj/item/clothing/glasses/shades_on_shade = null
-
+	
+	var/life_drain_amount = 3
+	var/stamina_drain_amount = 10
+	
+	var/leech_prob = 30
+	var/leech_heal_amount = 10
+	
+	var/chill_prob = 10
+	
+	
 
 	Life()
 		..()
@@ -68,37 +79,6 @@
 					if ((M.client && !( M.blinded )))
 						M.show_message("\red [user] gently taps [src] with [O]. ")
 		return
-
-	UnarmedAttack(var/atom/A)
-		if(!istype(A,mob/living/carbon))
-			A.attack_animal(src)
-			return
-		
-		var/mob/living/carbon/M = A
-		
-		if(M.stat==DEAD)
-			src << "This body is devoid of life. There is nothing for you to feed off of here."
-			return
-		
-		if(attack_sound)
-			playsound(M.loc, attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(M, null))
-			O.show_message("\red <B>[src]</B> [attacktext] [M]!", 1)
-		add_logs(src, M, "attacked", admin=0)
-
-		
-		M.take_overall_damage(3,0)
-		M.adjustStaminaLoss(rand(1,6)+rand(1,6))
-
-		health = min(health+3,maxHealth*2)
-		
-		if(prob(15))
-			M << "\purple An icy spear of dread reaches to your very soul!"
-			M.Jitter(500)
-			M.hallucination = min( M.hallucination+100, max(400,M.hallucination) ) //Won't reduce hallucination if above 400
-
-
-
 
 
 	Process_Spacemove(var/check_drift = 0)
