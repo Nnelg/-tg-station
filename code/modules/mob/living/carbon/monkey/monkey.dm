@@ -258,6 +258,24 @@
 		adjustBruteLoss(damage)
 		updatehealth()
 
+/mob/living/proc/attack_shade(mob/living/simple_animal/shade/user)
+	if(user.attack_sound)
+		playsound(loc, user.attack_sound, 50, 1, 1)
+	for(var/mob/O in viewers(src, null))
+		O.show_message("\red <B>[user]</B> [user.attacktext] [src]!", 1)
+	add_logs(user, src, "attacked", admin=0)
+	
+	if(stat!=DEAD)
+		user.adjustBruteLoss(-user.life_drain_amount)
+		if(prob(user.chill_prob))
+			M << "\purple An icy spear of dread reaches to your very soul!"
+			M.Jitter(300)
+			M.Stun(1)
+	
+	take_overall_damage(user.life_drain_amount,0)
+	adjustStaminaLoss(user.stamina_drain_amount)
+	
+	return
 
 /mob/living/carbon/monkey/attack_slime(mob/living/carbon/slime/M as mob)
 	if (!ticker)
