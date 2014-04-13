@@ -53,7 +53,7 @@
 */
 /mob/living/simple_animal/shade/UnarmedAttack(var/atom/A)
 	A.attack_shade(src)
-/atom/proc/attack_shade(mob/user as mob)
+/atom/proc/attack_shade(mob/living/simple_animal/shade/user)
 	attack_animal(user)
 	return
 
