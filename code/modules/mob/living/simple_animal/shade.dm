@@ -1,7 +1,7 @@
 /mob/living/simple_animal/shade
 	name = "Shade"
 	real_name = "Shade"
-	desc = "A bound spirit"
+	desc = "A bound spirit."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "shade"
 	icon_living = "shade"
@@ -26,6 +26,9 @@
 	status_flags = 0
 	faction = "cult"
 	status_flags = CANPUSH
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	var/obj/item/device/soulstone/master_stone = null
+	var/obj/item/clothing/glasses/shades_on_shade = null
 
 
 	Life()
@@ -38,11 +41,18 @@
 					ghostize()
 			qdel(src)
 			return
+		else
+			if(prob(20)) //slow regen
+				health = min( health+1, maxHealth )
 
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
 		if(istype(O, /obj/item/device/soulstone))
 			O.transfer_soul("SHADE", src, user)
+/*		else if(!shades_on_shade && istype(O, obj/item/clothing/glasses))
+			if()
+				
+*/ //			
 		else
 			if(O.force)
 				var/damage = O.force
