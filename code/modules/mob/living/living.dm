@@ -590,11 +590,12 @@
 	
 	if(stat!=DEAD)
 		if(prob(user.leech_prob))
+			user << "\blue <I>You feel reinvigorated.</I>"
 			user.adjustBruteLoss(-user.leech_heal_amount)
 		if(prob(user.chill_prob))
-			M << "\purple An icy spear of dread reaches to your very soul!"
-			M.Jitter(300)
-			M.Stun(1)
+			src << "\purple An icy spear of dread reaches to your very soul!"
+			Jitter(300)
+			Stun(1)
 	
 	take_overall_damage(rand(user.melee_damage_lower,user.melee_damage_upper),0)
 	
