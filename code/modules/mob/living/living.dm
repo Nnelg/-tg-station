@@ -588,7 +588,7 @@
 		O.show_message("\red <B>[user]</B> [user.attacktext] [src]!", 1)
 	add_logs(user, src, "attacked", admin=0)
 	
-	if(stat==DEAD)
+	if(stat!=DEAD)
 		user.adjustBruteLoss(-user.life_drain_amount)
 		if(prob(user.chill_prob))
 			M << "\purple An icy spear of dread reaches to your very soul!"
