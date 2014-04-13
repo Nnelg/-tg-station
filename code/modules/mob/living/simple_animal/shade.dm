@@ -68,3 +68,7 @@
 					if ((M.client && !( M.blinded )))
 						M.show_message("\red [user] gently taps [src] with [O]. ")
 		return
+
+	Process_Spacemove(var/check_drift = 0)
+		return 1	//Ripped straight from Space Carp!
+
